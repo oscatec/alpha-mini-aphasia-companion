@@ -1,0 +1,8 @@
+numpy
+Pillow
+facenet-pytorch
+autobahn[twisted]
+Twisted
+google-genai
+opencv-python
+# alpha_mini_rug must be installed separately (course-provided package)
