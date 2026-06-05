@@ -434,7 +434,7 @@ def ask_game_consent(session, intro_chat, patient_name: str) -> bool:
 
 
 @inlineCallbacks
-def word_game_phase(session, game_chat, patient_name: str, info: str | None):
+def word_game_phase(session, intro_chat, patient_name: str, info: str | None):
     global finish_dialogue, query
 
     context = f"You are talking to {patient_name}."
@@ -444,7 +444,7 @@ def word_game_phase(session, game_chat, patient_name: str, info: str | None):
             "Use it occasionally to personalise your cues."
         )
 
-    opening = game_chat.send_message(
+    opening = intro_chat.send_message(
         f"{context} The patient just agreed to play the word game. "
         "Start immediately with the first Level 1 semantic cue for your chosen word. "
         "Keep it to 1-2 short sentences."
@@ -489,7 +489,7 @@ def word_game_phase(session, game_chat, patient_name: str, info: str | None):
                 reply = "I am right here whenever you feel like trying."
                 consecutive_silences = 0
             else:
-                reply = handle_silence(game_chat, last_topic)
+                reply = handle_silence(intro_chat, last_topic)
             print(f"[Robot] {reply}")
             yield say(session, reply)
             yield sleep(1)
@@ -500,7 +500,7 @@ def word_game_phase(session, game_chat, patient_name: str, info: str | None):
 
         # -- Exit --
         if query.lower() in EXIT_WORDS:
-            farewell = game_chat.send_message(
+            farewell = intro_chat.send_message(
                 "The patient wants to stop. Say a warm one-sentence goodbye and well done."
             )
             print(f"[Robot] {farewell.text}")
@@ -509,13 +509,13 @@ def word_game_phase(session, game_chat, patient_name: str, info: str | None):
 
         # -- Unclear input --
         elif is_unclear(query):
-            reply = handle_unclear(game_chat, query, last_topic)
+            reply = handle_unclear(intro_chat, query, last_topic)
             print(f"[Robot] {reply}")
             yield say(session, reply)
 
         # -- Normal guess --
         elif query:
-            response = game_chat.send_message(query)
+            response = intro_chat.send_message(query)
             print(f"[Robot] {response.text}")
             yield say(session, response.text)
 
@@ -540,17 +540,14 @@ def main(session, details):
     face_db = load_face_db()
 
     # -- Phase 1: face recognition --
-    name, embedding, is_new = yield face_recognition_phase(session, face_db)
+    #name, embedding, is_new = yield face_recognition_phase(session, face_db)
 
     # Create chat sessions
     intro_chat = chatbot.chats.create(
         model="gemini-2.5-flash",
         config=genai.types.GenerateContentConfig(system_instruction=INTRO_SYSTEM_PROMPT),
     )
-    game_chat = chatbot.chats.create(
-        model="gemini-2.5-flash-lite",
-        config=genai.types.GenerateContentConfig(system_instruction=GAME_SYSTEM_PROMPT),
-    )
+    
 
     # Subscribe ASR once; stream is opened/closed each turn
     yield session.subscribe(asr, "rie.dialogue.stt.stream")
@@ -576,7 +573,7 @@ def main(session, details):
     # -- Phase 3: ask consent, then start word game --
     wants_to_play = yield ask_game_consent(session, intro_chat, name)
     if wants_to_play:
-        yield word_game_phase(session, game_chat, name, info)
+        yield word_game_phase(session, intro_chat, name, info)
 
     yield session.call("rom.optional.behavior.play", name="BlocklyCrouch")
     session.leave()
