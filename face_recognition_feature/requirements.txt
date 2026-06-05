@@ -1,0 +1,6 @@
+autobahn
+twisted
+opencv-python
+numpy
+face-recognition
+opencv-contrib-python
