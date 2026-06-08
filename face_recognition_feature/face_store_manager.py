@@ -5,7 +5,7 @@ from typing import List
 
 import numpy as np
 
-from CommonCode.face_recognition_feature.face_recogniztion_manager import FacialFeatures
+from face_recogniztion_manager import FacialFeatures
 
 
 @dataclass

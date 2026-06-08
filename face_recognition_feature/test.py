@@ -1,5 +1,5 @@
-from CommonCode.face_recognition_feature.face_store_manager import FaceStoreManager
-from CommonCode.face_recognition_feature.face_recogniztion_manager import (
+from face_store_manager import FaceStoreManager
+from face_recogniztion_manager import (
     FacialFeatures,
     FaceNotFoundError,
     FaceRecognitionManager,
@@ -34,7 +34,7 @@ def average_facial_features(features: list[FacialFeatures]) -> FacialFeatures:
 def main() -> None:
     face_store_manager  = FaceStoreManager()
     # path = "test_images/martijn/"
-    image_path = "test_images/black_women.jpg"
+    image_path = "test_images/martijn/martijn 2.jpg"
     
     # get the facial features
     try:
