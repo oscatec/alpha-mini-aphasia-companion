@@ -1,0 +1,9 @@
+autobahn[twisted]>=23.6.2
+google-genai>=1.0.0
+msgpack>=1.0.0
+numpy>=1.24.0
+opencv-python>=4.8.0
+Twisted>=22.10.0
+
+# Optional robot movement helper imported defensively in modules/conversation_flow.py.
+alpha-mini-rug>=0.0.0
