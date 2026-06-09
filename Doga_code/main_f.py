@@ -10,10 +10,10 @@ from twisted.internet.defer import inlineCallbacks
 from google import genai
 from google.genai import errors as genai_errors
 from alpha_mini_rug import perform_movement
+from settings import API_KEY
 
 
 # ── Gemini setup ──────────────────────────────────────────────────────────────
-API_KEY = "REDACTED_API_KEY"
 chatbot = genai.Client(api_key=API_KEY)
 
 INTRO_SYSTEM_PROMPT = (
