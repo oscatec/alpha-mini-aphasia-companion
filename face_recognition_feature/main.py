@@ -4,8 +4,8 @@ from autobahn.twisted.util import sleep
 
 from pathlib import Path
 
-from CommonCode.face_recognition_feature.face_recogniztion_manager import FaceNotFoundError, FaceRecognitionManager, MultipleFacesFoundError
-from CommonCode.face_recognition_feature.face_store_manager import FaceStoreManager
+from face_recogniztion_manager import FaceNotFoundError, FaceRecognitionManager, MultipleFacesFoundError
+from face_store_manager import FaceStoreManager
 
 
 # def sight(frame):
@@ -59,14 +59,39 @@ def main(session, details):
         return
 
     # Check if the facial features have anything in commong with the database
-    name = face_store_manager.check_match_in_DB(facial_features, threshold=0.2)
+    name = face_store_manager.check_match_in_DB(facial_features, threshold=0.22)
     
     # If no match, say hello and ask for name
-    if name == None:
-        print("I have not seen you before, what is your name?")
-        name = "Martijn 2"
-        # asks for name
+    # No match found
+    if name is None:
+
+        # Ask for the user's name
+        yield session.call(
+            "rie.dialogue.say",
+            text="Hello, I do not think we have met before. What is your name?"
+        )
+
+        print("Waiting for user name...")
+
+        # Listen for spoken input
+        response = yield session.call("rie.dialogue.stt.read")
+
+        print(response)
+        name = response[0]["data"]["body"]["text"]
+
+        print(f"Recognized name: {name}")
+
+        # Confirm the name
+        yield session.call(
+            "rie.dialogue.say",
+            text=f"Nice to meet you, {name}"
+        )
+
+        # Store in database
         face_store_manager.add_person(name, facial_features)
+
+        print(f"Stored new person in database: {name}")
+
     
     # If match, print the name of the match
     else:

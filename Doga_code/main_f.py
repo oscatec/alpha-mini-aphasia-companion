@@ -442,12 +442,12 @@ def main(session, details):
 
 # ── WAMP connection ───────────────────────────────────────────────────────────
 wamp = Component(
-    transports=[{
-        "url": "ws://wamp.robotsindeklas.nl",
-        "serializers": ["msgpack"],
-        "max_retries": 0,
-    }],
-    realm="rie.REDACTED_REALM",
+	transports=[{
+		"url": "ws://wamp.robotsindeklas.nl",
+		"serializers": ["msgpack"],
+		"max_retries": 0
+	}],
+	realm="rie.REDACTED_REALM",
 )
 
 wamp.on_join(main)
