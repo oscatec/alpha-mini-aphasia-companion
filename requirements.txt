@@ -3,6 +3,7 @@ google-genai==2.8.0
 numpy==2.4.6
 opencv-python==4.13.0.92
 Twisted==26.4.0
+alpha_mini_rug
 
 # Required by the robot integration, but not available on PyPI.
 # Install the course-provided alpha_mini_rug package separately.
