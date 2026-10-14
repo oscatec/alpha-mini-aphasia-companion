@@ -2,10 +2,13 @@
 config.py – All tuneable constants in one place.
 
 Change values here; nothing else needs editing.
+Secrets are read from environment variables, never committed.
 """
 
+import os
+
 # ── Gemini ────────────────────────────────────────────────────────────────────
-GEMINI_API_KEY = "REDACTED_API_KEY"  
+GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "")
 
 # Models used per task (cheaper/faster models for simpler tasks)
 GEMINI_MODEL_MAIN       = "gemini-2.5-pro"        # main dialogue (smart JSON mode)
@@ -14,7 +17,7 @@ GEMINI_MODEL_SILENCE    = "gemini-2.5-flash-lite"  # silence / unclear handling
 
 # ── WAMP / robot connection ───────────────────────────────────────────────────
 WAMP_URL   = "ws://wamp.robotsindeklas.nl"
-WAMP_REALM = "rie.REDACTED_REALM"              
+WAMP_REALM = os.environ.get("WAMP_REALM", "")              
 
 # ── Face recognition ─────────────────────────────────────────────────────────
 FACE_DB_DIR          = "face_db"

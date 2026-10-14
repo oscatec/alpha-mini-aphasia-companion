@@ -1,3 +1,4 @@
+import os
 from autobahn.twisted.component import Component, run
 from twisted.internet.defer import inlineCallbacks
 from autobahn.twisted.util import sleep
@@ -114,7 +115,7 @@ wamp = Component(
 		"serializers": ["msgpack"],
 		"max_retries": 0
 	}],
-	realm="rie.REDACTED_REALM",
+	realm=os.environ.get("WAMP_REALM", ""),
 )
 
 wamp.on_join(main)

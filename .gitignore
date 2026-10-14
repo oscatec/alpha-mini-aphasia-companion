@@ -1,3 +1,9 @@
 *.pyc
+__pycache__/
 *.env
+.env
+.venv/
 .DS_Store
+snapshot.jpg
+face_db/
+sample.json
