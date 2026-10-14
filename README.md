@@ -69,8 +69,8 @@ Settings such as model choice, silence timing and face-match threshold live in `
 | Member | Main contributions |
 |---|---|
 | Óscar Ferrer Domingo ([@oscatec](https://github.com/oscatec)) | Gemini API integration and the full smart dialogue implementation, including the LLM harness: structured turns, model routing and real-time context handling |
-| Martijn Schippers ([@MartijnSchippers](https://github.com/MartijnSchippers)) | _to fill in_ |
-| Doga Turak ([@dogaturak](https://github.com/dogaturak)) | _to fill in_ |
-| Gian Fuschi ([@GianFuschi](https://github.com/GianFuschi)) | _to fill in_ |
+| Martijn Schippers ([@MartijnSchippers](https://github.com/MartijnSchippers)) | Face recognition software and face information database |
+| Doga Turak ([@dogaturak](https://github.com/dogaturak)) | Silence handleling and integrated games for optional integration |
+| Gian Fuschi ([@GianFuschi](https://github.com/GianFuschi)) | Patient profile building and main code cohesiveness |
 
 **Stack:** Python, Google Gemini API, Autobahn / Twisted (WAMP), OpenCV, NumPy
